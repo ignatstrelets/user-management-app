@@ -8,7 +8,7 @@ from django.core.management.commands.runserver import Command as runserver
 def main():
     """Run administrative tasks."""
     runserver.default_port = "80"
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dcrm.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django-user-management-project.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
