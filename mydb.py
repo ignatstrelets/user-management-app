@@ -8,8 +8,8 @@ import mysql.connector
 
 dataBase = mysql.connector.connect(
 	host = 'localhost',
-	user = 'root',
-	passwd = 'password123'
+	user = 'ubuntu',
+	passwd = ''
 
 	)
 
@@ -17,6 +17,6 @@ dataBase = mysql.connector.connect(
 cursorObject = dataBase.cursor()
 
 # Create a database
-cursorObject.execute("CREATE DATABASE elderco")
+cursorObject.execute("CREATE DATABASE itransition_django_app")
 
 print("All Done!")
