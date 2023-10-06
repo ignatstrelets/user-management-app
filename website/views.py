@@ -61,22 +61,13 @@ def block_user(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             selected_users_id = request.POST.getlist('boxes')
-            del selected_users_id[-1] 
-            for id in selected_users_id:
-                print(selected_users_id)
-            return redirect('home')
-        
-def block_user(request):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            selected_users_id = request.POST.getlist('boxes')
             del selected_users_id[-1]
             for id in selected_users_id:
                 try:
                     u = User.objects.get(id = id)
                     u.is_active = False
                     u.save()
-                    messages.success(request, "The user is blocked")
+                    messages.success(request, "The User is Blocked")
 
                 except Exception as e:
                     messages.error(request, e.message)
@@ -96,7 +87,7 @@ def unblock_user(request):
                     u = User.objects.get(id = id)
                     u.is_active = True
                     u.save()
-                    messages.success(request, "The user is unblocked")
+                    messages.success(request, "The User is Unblocked")
 
                 except Exception as e:
                     messages.error(request, e.message)
@@ -113,7 +104,7 @@ def delete_user(request):
                 try:
                     u = User.objects.get(id = id)
                     u.delete()
-                    messages.success(request, "The user is deleted")
+                    messages.success(request, "The User is Deleted")
 
                 except Exception as e:
                     messages.error(request, e.message)
