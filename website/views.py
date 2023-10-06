@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import SignUpForm
 #initially it was : forms import SignUpForm, AddRecordForm 
@@ -14,8 +15,8 @@ def home(request):
     all_users = user.objects.all()
     # Check to see if logging in
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         # Authenticate
         user = authenticate(request, username=username, password=password)
         if user is not None:
@@ -56,12 +57,41 @@ def register_user(request):
 
     return render(request, 'register.html', {'form':form})
 
+def block_user(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            selected_users_id = request.POST.getlist('boxes')
+            del selected_users_id[-1] 
+            for id in selected_users_id:
+                print(selected_users_id)
+            return redirect('home')
+        
+def delete_user(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            selected_users_id = request.POST.getlist('boxes')
+            del selected_users_id[-1]
+            for id in selected_users_id:
+                try:
+                    u = User.objects.get(id = id)
+                    u.delete()
+                    messages.success(request, "The user is deleted")            
 
-# show user (from auth)
+                except User.DoesNotExist:
+                    messages.error(request, "User does not exist")    
+                    return redirect('home')
+
+                except Exception as e:
+                    messages.error(request, e.message)
+                    return redirect('home')
+
+                return redirect('home') 
+
 """
 def customer_record(request, pk):
     if request.user.is_authenticated:
         # Look Up Records
+        
         customer_record = Record.objects.get(id=pk)
         return render(request, 'record.html', {'customer_record':customer_record})
     else:

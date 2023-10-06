@@ -6,7 +6,7 @@
 
 {% if user.is_authenticated %}
 
-<form action=""  method="POST">
+<form action="{% url 'block_user' %}"  method="POST">
 	{% csrf_token %}
 	{{form.as_p}}
 
@@ -27,7 +27,7 @@
 		{% if users %}
 		{% for user in users %}
 			<tr>
-				<td><input type="checkbox" name="user-management" value=""></td>
+				<td><input type="checkbox" name="boxes" value="{{ user.id }}" id="{{ user.id }}"></td>
 				<td>{{ user.id }}</td>
 				<td>{{ user.username }}</td>
 				<td>{{ user.email }}</td>
@@ -47,8 +47,10 @@
 	  </tbody>
 	</table>
 	<br/>
-	<button class='btn-secondary' type="submit">Block</button>
-
+	<button class='btn-secondary' type="submit" value="{{user.id}}" name="boxes">Block</button>
+	<button class='btn-secondary' type="submit" value="{{user.id}}" formaction="" name="boxes">Unblock</button>
+	<button class='btn-secondary' type="submit" value="{{user.id}}" formaction="{% url 'delete_user' %}" name="boxes">Delete</button>
+	</form>
 
 
 
