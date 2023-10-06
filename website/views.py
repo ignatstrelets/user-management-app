@@ -61,9 +61,9 @@ def block_user(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             selected_users_id = request.POST.getlist('boxes')
-            caller_id = user.id
-            selected_users_id.remove(caller_id)
-            print(selected_users_id)
+            caller_id = request.user.id
+            selected_users_id.remove(str(caller_id))
+            #print(selected_users_id)
             for id in selected_users_id:
                 u = User.objects.get(id = id)
                 u.is_active = False
@@ -89,7 +89,8 @@ def delete_user(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             selected_users_id = request.POST.getlist('boxes')
-            del selected_users_id[-1]
+            caller_id = request.user.id
+            selected_users_id.remove(str(caller_id))
             for id in selected_users_id:
                 u = User.objects.get(id = id)
                 u.delete()
