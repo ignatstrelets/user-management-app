@@ -1,5 +1,3 @@
-# using mysql-connector-python 
-
 import mysql.connector
 
 dataBase = mysql.connector.connect(

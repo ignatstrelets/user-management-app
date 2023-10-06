@@ -26,14 +26,13 @@
   	  <thead class="table-dark">
 	    <tr>
 		    <th> <input scope="col" name="select all" type="checkbox" onClick="toggle(this, 'boxes')"></th>     
-	     <script type="text/javascript" >
-	                                    function toggle(select_toggle,boxes) {
-                                    checkboxes = document.getElementsByName(boxes);
-                                    for (var i = 0,
-                                        n = checkboxes.length; i < n; i++) {
-                                        checkboxes[i].checked = select_toggle.checked;
-                                        }
-                                }
+	     	<script type="text/javascript">
+				function toggle(select_toggle,boxes) {
+					checkboxes = document.getElementsByName(boxes);
+					for (var i = 0, n = checkboxes.length; i < n; i++) {
+						checkboxes[i].checked = select_toggle.checked;
+					}
+				}
             </script>
       	    <th scope="col">ID</th>
             <th scope="col">Username</th>
@@ -92,7 +91,7 @@
   <button type="submit" class="btn btn-secondary">Login</button>
 
 </form>
-
+</div>
 
 
 {% endif %}

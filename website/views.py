@@ -1,23 +1,16 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import SignUpForm
-#initially it was : forms import SignUpForm, AddRecordForm 
-""", AddRecordForm"""
-"""from .models import Record"""
-"""records = Record.objects.all()"""
+
 
 def home(request):
-#   """records = Record.objects.all()"""
     user = get_user_model()
     all_users = user.objects.all()
-    # Check to see if logging in
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        # Authenticate
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -28,9 +21,6 @@ def home(request):
             return redirect('home')
     else:
         return render(request, 'home.html', {'users':all_users})
-        #return render(request, 'home.html')
-    #initially it was 'return render(request, 'home.html', {'records':records})' 
-
 
 
 def logout_user(request):
@@ -44,7 +34,6 @@ def register_user(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            # Authenticate and login
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
@@ -54,8 +43,8 @@ def register_user(request):
     else:
         form = SignUpForm()
         return render(request, 'register.html', {'form':form})
-
     return render(request, 'register.html', {'form':form})
+
 
 def block_user(request):
     if request.user.is_authenticated:
@@ -63,7 +52,6 @@ def block_user(request):
             selected_users_id = request.POST.getlist('boxes')
             caller_id = request.user.id
             selected_users_id.remove(str(caller_id))
-            #print(selected_users_id)
             for id in selected_users_id:
                 u = User.objects.get(id = id)
                 u.is_active = False
@@ -85,6 +73,7 @@ def unblock_user(request):
                 messages.success(request, "The User is Unblocked")
             return redirect('home') 
 
+
 def delete_user(request):
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -96,57 +85,3 @@ def delete_user(request):
                 u.delete()
                 messages.success(request, "The User is Deleted")
             return redirect('home')
-
-"""
-def customer_record(request, pk):
-    if request.user.is_authenticated:
-        # Look Up Records
-        
-        customer_record = Record.objects.get(id=pk)
-        return render(request, 'record.html', {'customer_record':customer_record})
-    else:
-        messages.success(request, "You Must Be Logged In To View That Page...")
-        return redirect('home')
-"""
-
-# deletion of user (via toolbar)
-"""
-def delete_record(request, pk):
-    if request.user.is_authenticated:
-        delete_it = Record.objects.get(id=pk)
-        delete_it.delete()
-        messages.success(request, "Record Deleted Successfully...")
-        return redirect('home')
-    else:
-        messages.success(request, "You Must Be Logged In To Do That...")
-        return redirect('home') 
-"""    
-"""
-def add_record(request):
-    form = AddRecordForm(request.POST or None)
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            if form.is_valid():
-                add_record = form.save() 
-                messages.success(request, "Record Added...")
-                return redirect('home')
-        return render(request, 'add_record.html', {'form':form})
-    else:
-        messages.success(request, "You Must Be Logged In...")
-        return redirect('home')
-"""
-
-"""
-def update_record(request, pk):
-    if request.user.is_authenticated:
-        current_record = Record.objects.get(id=pk)
-        form = AddRecordForm(request.POST or None, instance=current_record)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Record Has Been Updated!")
-            return redirect('home')
-        return render(request, 'update_record.html', {'form':form})
-    else:
-        messages.success(request, "You Must Be Logged In...")
-        return redirect('home') 
- """
