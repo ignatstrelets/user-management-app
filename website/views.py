@@ -62,6 +62,7 @@ def block_user(request):
         if request.method == "POST":
             selected_users_id = request.POST.getlist('boxes')
             del selected_users_id[-1]
+            print(selected_users_id)
             for id in selected_users_id:
                 try:
                     u = User.objects.get(id = id)
@@ -80,8 +81,8 @@ def unblock_user(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             selected_users_id = request.POST.getlist('boxes')
-            print (selected_users_id)
             del selected_users_id[-1]
+            print (selected_users_id)
             for id in selected_users_id:
                 try:
                     u = User.objects.get(id = id)
