@@ -89,6 +89,7 @@ def unblock_user(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             selected_users_id = request.POST.getlist('boxes')
+            print (selected_users_id)
             del selected_users_id[-1]
             for id in selected_users_id:
                 try:

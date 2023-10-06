@@ -9,7 +9,19 @@
 <form action="{% url 'block_user' %}"  method="POST">
 	{% csrf_token %}
 	{{form.as_p}}
-
+	<div>
+        <button class='btn-secondary' type="submit" value="{{user.id}}" formaction="{% url 'block_user' %}" name="boxes" style="width: 10%;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+</svg>Block</button>
+        <button class='btn-secondary' type="submit" value="{{user.id}}" formaction="{% url 'unblock_user' %}" name="boxes" style="width: 10%;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock-fill" viewBox="0 0 16 16">
+  <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2z"/>
+</svg>Unblock</button>
+        <button class='btn-secondary' type="submit" value="{{user.id}}" formaction="{% url 'delete_user' %}" name="boxes" style="width: 10%;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg>Delete</button>
+        <hr>	
+	<br>
+	</div>
 	<table class="table table-striped table-hover table-bordered">
   	  <thead class="table-dark">
 	    <tr>
@@ -56,10 +68,7 @@
 	  </tbody>
 	</table>
 	<br/>
-	<button class='btn-secondary' type="submit" value="{{user.id}}" formaction="{% url 'block_user' %}" name="boxes">Block</button>
-	<button class='btn-secondary' type="submit" value="{{user.id}}" formaction="{% url 'unblock_user' %}" name="boxes">Unblock</button>
-	<button class='btn-secondary' type="submit" value="{{user.id}}" formaction="{% url 'delete_user' %}" name="boxes">Delete</button>
-	</form>
+        </form>
 
 
 
